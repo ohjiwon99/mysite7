@@ -28,7 +28,7 @@ public class GuestbookController {
 	// 메소드 일반
 
 	// 등록 리다이렉트 메인폼
-
+	
 	/************************************************************
 	 * list --> list 메서드를 통해 전체리스트를 조회 //localhost:8881/guestbook(여기까지
 	 * 공통주소)/guest/alist
@@ -44,22 +44,14 @@ public class GuestbookController {
 
 		return "/guestbook/addList";
 	}
-	/*	@RequestMapping(value = "/addlistform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String addList(Model model) {
-		System.out.println("GuestbookController.addlistform");
 
-		// 자동연결@Autowired
-		List<GuestbookVo> guestbookList = guestbookService.exeList();
 
-		model.addAttribute("gList", guestbookList);
-
-		return "/guestbook/addList";
-	}*/
-
-	// 게스트북삭제폼
-	@RequestMapping(value = "/deleteform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modifyForm(@RequestParam(value = "no") int no, Model model) {
-		System.out.println("GuestbookController.deleteform");
+	/*******************************************************
+	 * 삭제폼
+	 *******************************************************/
+	@RequestMapping(value = "/dform", method = { RequestMethod.GET, RequestMethod.POST })
+	public String dform(@RequestParam(value = "no") int no, Model model) {
+		System.out.println("GuestbookController.dform");
 
 		GuestbookVo guestbookVo = guestbookService.exeDeleteForm(no);
 
@@ -68,36 +60,29 @@ public class GuestbookController {
 		return "/guestbook/deleteForm";
 	}
 
-	// 게스트북삭제폼2
-	// localhost:8080/phonebook5/phone/modifyform
-	@RequestMapping(value = "/deleteform2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modifyForm2(@RequestParam(value = "bno") int bno, Model model) {
-		System.out.println("GuestbookController.deleteform2()");
-		System.out.println(bno);
+	/*******************************************************
+	 * 삭제폼2
+	 *******************************************************/
+	@RequestMapping(value = "/dform2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String dform2(@RequestParam(value = "bno") int gno, Model model) {
+		System.out.println("GuestbookController.dform2()");
+		System.out.println(gno);
 
-		Map<String, Object> pMap = guestbookService.exeModifyForm2(bno);
+		Map<String, Object> pMap = guestbookService.exeModifyForm2(gno);
 		model.addAttribute("pMap", pMap);
 
 		return "/board/modifyForm2";
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*******************************************************
+	 * 삭제--> delete 메서드를 통해 전화번호부에서 선택한 연락처를 삭제
+	 *******************************************************/
 	// 삭제
 	@RequestMapping(value = "/delete", method = { RequestMethod.GET, RequestMethod.POST })
 	public String delete(@RequestParam(value = "no") int no, @RequestParam(value = "password") String password) {
 
 		System.out.println("GuestbookController.delete()");
-
-		// System.out.println(personId);
 
 		guestbookService.exeDelete(no, password);
 
@@ -106,7 +91,9 @@ public class GuestbookController {
 
 	}
 
-	// 게스트북등록
+	/************************************************************
+	 * 등록 --> writeForm 메서드를 통해 연락처를 등록하는 폼을 조회가능
+	 ***********************************************************/
 	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
 	public String write(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("GuestbookController.write");

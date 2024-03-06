@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 쿼리문 작성 -->
+	
+	<!-- personVo 매핑 -->
+	<!-- 
+	<resultMap id="resultMapPersonVo" type="PersonVo" >
+		<result column="person_id" property="personId"></result>
+		<result column="name" property="name"></result>
+		<result column="hp" property="hp"></result>
+		<result column="company" property="company"></result>
+	</resultMap>
+	 -->
+	 
+	 <!-- 전체리스트 -->
+	<select id="selectList" resultType="BoardVo">
+		<![CDATA[
+			select bno, title, writer, content, hit, reg_date
+			from board
+		]]>
+	</select>
+	
+	<!-- 1명 데이터 가져오기 -->
+	<select id="selectOne" parameterType="int" resultType="BoardVo">
+		<![CDATA[
+			select bno, title, writer, content, hit, reg_date
+			from board
+			where bno= #{ bno }
+		]]>
+	</select>
+	
+	<!-- 1명 데이터 가져오기2 -->
+	<select id="selectOne2" parameterType="int" resultType="map">
+		<![CDATA[
+			select bno, title, writer, content, hit, reg_date
+			from board
+			where bno= #{ bno }
+		]]>
+	</select>
+	 
+	<!-- 추가 insert -->
+	<insert id="boardInsert" parameterType="BoardVo">
+		<![CDATA[
+			insert into board
+			values(null, #{ title }, #{ writer }, #{ content }, 0, now())
+		]]>
+	</insert>
+	
+	<!-- 추가2 map사용 insert2 -->
+	<insert id="boardInsert2" parameterType="map">
+		<![CDATA[
+			insert into board
+			values(null, #{ title }, #{ writer }, #{ content }, 0, now())
+		]]>
+	</insert>
+	
+	<!-- 수정 update -->
+	<update id="boardUpdate" parameterType="BoardVo">
+		<![CDATA[
+			update board
+			set title = #{ title },
+				writer = #{ writer },
+			    content = #{ content }
+			where bno = #{ bno }
+		]]>
+	</update>
+	
+	<!-- 삭제 delete -->
+	<delete id="boardDelete" parameterType="int">
+		<![CDATA[
+			delete from board where bno = #{ bno }
+		]]>
+	</delete>
+
+
+</mapper>

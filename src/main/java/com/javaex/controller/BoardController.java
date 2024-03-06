@@ -22,9 +22,9 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	// =============== board/form controller 모음
-	// ==============================================
-	// 보드리스트폼
+	/************************************************************
+	 * listForm -->리스트 폼
+	 ***********************************************************/
 	@RequestMapping(value = "/listform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String listForm(Model model) {
 		System.out.println("BoardController.listform");
@@ -37,7 +37,9 @@ public class BoardController {
 		return "/board/list";
 	}
 
-	// 보드수정폼
+	/************************************************************
+	 * modifyForm -->보드수정폼
+	 ***********************************************************/
 	@RequestMapping(value = "/modifyform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String modifyForm(@RequestParam(value = "bno") int bno, Model model) {
 		System.out.println("BoardController.modifyform");
@@ -49,8 +51,9 @@ public class BoardController {
 		return "/board/modifyForm";
 	}
 
-	// 수정폼2
-	// localhost:8080/phonebook5/phone/modifyform
+	/************************************************************
+	 * modifyForm -->수정폼2
+	 ***********************************************************/
 	@RequestMapping(value = "/modifyform2", method = { RequestMethod.GET, RequestMethod.POST })
 	public String modifyForm2(@RequestParam(value = "bno") int bno, Model model) {
 		System.out.println("phonebookController.modifyform2()");
@@ -63,7 +66,9 @@ public class BoardController {
 
 	}
 
-	// 보드읽기폼
+	/************************************************************
+	 * readForm -->보드 읽기폼
+	 ***********************************************************/
 	@RequestMapping(value = "/readform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String readForm(@RequestParam(value = "bno") int bno, Model model) {
 		System.out.println("BoardController.readform");
@@ -74,19 +79,18 @@ public class BoardController {
 		return "/board/read";
 	}
 
-	// 보드등록폼
+	/************************************************************
+	 * writeForm -->보드등록폼
+	 ***********************************************************/
 	@RequestMapping(value = "/writeform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String writeForm() {
 		System.out.println("BoardController.writeform");
 		return "/board/writeForm";
 	}
 
-	// ==============================================================================================
-
-	// =============== board 기능 모음
-	// =================================================================
-
-	// 게시판등록
+	/************************************************************
+	 * write -->게시판등록
+	 ***********************************************************/
 	@RequestMapping(value = "/write", method = { RequestMethod.GET, RequestMethod.POST })
 	public String write(@ModelAttribute BoardVo boardVo) {
 		System.out.println("BoardController.write");
@@ -102,7 +106,9 @@ public class BoardController {
 
 	}
 
-	// 게시판등록2
+	/************************************************************
+	 * write2 -->게시판등록2
+	 ***********************************************************/
 	@RequestMapping(value = "/write2", method = { RequestMethod.GET, RequestMethod.POST })
 	public String write2(@RequestParam(value = "title") String title, @RequestParam(value = "writer") String writer,
 			@RequestParam(value = "content") String content) {
@@ -121,7 +127,9 @@ public class BoardController {
 		return "redirect:/board/listform";
 	}
 
-	// 수정
+	/************************************************************
+	 * modify -->수정
+	 ***********************************************************/
 	@RequestMapping(value = "/modify", method = { RequestMethod.GET, RequestMethod.POST })
 	public String modify(@ModelAttribute BoardVo boardVo) {
 
@@ -135,7 +143,9 @@ public class BoardController {
 		return "redirect:/board/listform";
 	}
 
-	// 삭제
+	/************************************************************
+	 * delete-->삭제
+	 ***********************************************************/
 	@RequestMapping(value = "/delete", method = { RequestMethod.GET, RequestMethod.POST })
 	public String delete(@RequestParam(value = "bno") int bno) {
 

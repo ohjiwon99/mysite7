@@ -17,7 +17,7 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 
-	// 리스트
+	//리스트 exeList --> 전체 연락처 리스트를 조회하는 기능
 	public List<GuestbookVo> exeList() {
 		System.out.println("GuestbookService.exeList()");
 
@@ -26,7 +26,7 @@ public class GuestbookService {
 		return guestbookList;
 	}
 
-	// 수정폼
+	// 수정폼 -->exeDeleteForm
 	public GuestbookVo exeDeleteForm(int no) {
 		System.out.println("GuestbookService.exeDeleteForm()");
 
@@ -38,21 +38,21 @@ public class GuestbookService {
 
 	}
 
-	// 수정폼2
-	public Map<String, Object> exeModifyForm2(int bno) {
+	// 수정폼2 -->exeDeleteForm2
+	public Map<String, Object> exeModifyForm2(int gno) {
 		System.out.println("GuestbookService.exeModifyForm2()");
 
-		Map<String, Object> pMap = guestbookDao.guestbookSelectOne2(bno);
+		Map<String, Object> pMap = guestbookDao.guestbookSelectOne2(gno);
 
 		return pMap;
 
 	}
 
-	// 삭제
+	//삭제 exeDelete --> 메서드는 지정된 번호의 연락처를 삭제하는 기능
 	public int exeDelete(int no, String password) {
 		System.out.println("GuestbookService.exeDelete()");
 
-		// map 사용
+		// map 
 		Map<String, String> gMap = new HashMap<String, String>();
 		gMap.put("no", String.valueOf(no));
 		gMap.put("password", password);
@@ -62,7 +62,7 @@ public class GuestbookService {
 		return count;
 	}
 
-	// 게스트북 등록
+	// 등록  exeWrite --> 전화번호부에 새로운 연락처를 등록하는 기능
 	public int exeWrite(GuestbookVo guestbookVo) {
 		System.out.println("BoardService.exeWrite()");
 

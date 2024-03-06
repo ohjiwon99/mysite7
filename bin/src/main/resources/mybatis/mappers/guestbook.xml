@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbook">
+
+	<!-- 쿼리문 작성 -->
+	
+	<!-- personVo 매핑 -->
+	<!-- 
+	<resultMap id="resultMapPersonVo" type="PersonVo" >
+		<result column="person_id" property="personId"></result>
+		<result column="name" property="name"></result>
+		<result column="hp" property="hp"></result>
+		<result column="company" property="company"></result>
+	</resultMap>
+	 -->
+	  <!-- 전체리스트 -->
+	<select id="selectList" resultType="GuestbookVo">
+		<![CDATA[
+			select no, name, password, content, reg_date
+			from guestbook
+		]]>
+	</select>
+	
+	<!-- 1명 데이터 가져오기 -->
+	<select id="selectOne" parameterType="int" resultType="GuestbookVo">
+		<![CDATA[
+			select no, name, password, content, reg_date
+			from guestbook
+			where no= #{ no }
+		]]>
+	</select>
+	
+	<!-- 삭제 delete -->
+	<delete id="guestbookDelete" parameterType="map">
+		<![CDATA[
+			delete from guestbook
+			where no = #{ no }
+			and password = #{ password }
+		]]>
+	</delete>
+	
+	<!-- 추가 insert -->
+	<insert id="guestbookInsert" parameterType="GuestbookVo">
+		<![CDATA[
+			insert into guestbook
+			values(null, #{ name }, #{ password }, #{ content }, now());
+		]]>
+	</insert>
+	
+	
+	
+	
+	
+	
+
+</mapper>
