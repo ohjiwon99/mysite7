@@ -19,6 +19,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	/*로그인, 로그아웃, 사용자 등록, 사용자 프로필 수정 등 사용자 관련 작업을 처리*/
 
 	/***************************************************************************
 	 * 로그인 관련 login,logout
@@ -39,11 +40,12 @@ public class UserController {
 
 		System.out.println("UserController.login");
 
+		//`UserService`에서 `exeLogin`을 호출하고, 
 		UserVo authUser = userService.exeLogin(userVo);
 
 		session.setAttribute("authUser", authUser);
 
-		// 성공하면 메인으로 리다이렉트
+		// 로그인 성공 시 메인으로 리다이렉트
 		return "redirect:/main";
 
 	}
@@ -56,7 +58,7 @@ public class UserController {
 
 		session.invalidate();
 
-		// 성공하면 메인으로 리다이렉트
+		// `logout`: 세션을 무효화하여 로그아웃 프로세스를 처리하고 메인 페이지로 리디렉션
 		return "redirect:/main";
 
 	}
@@ -74,7 +76,7 @@ public class UserController {
 		return "/user/joinForm";
 	}
 
-	// 회원가입완료폼
+	// 회원가입완료폼 (사용자 등록 완료 뷰)
 	@RequestMapping(value = "/joinok", method = { RequestMethod.GET, RequestMethod.POST })
 	public String joinOk() {
 
@@ -90,24 +92,12 @@ public class UserController {
 		System.out.println("UserController.join");
 
 		System.out.println(userVo.toString());
-
+		//UserService`에서 `exeJoin`을 호출하여 사용자 등록을 처리하고 등록 완료 뷰로 리디렉션
 		userService.exeJoin(userVo);
 
 		// 성공하면 리스트로 리다이렉트
 		return "redirect:/user/joinok";
 
-	}
-
-	// 회원가입2
-	@RequestMapping(value = "/join2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String join2(@RequestParam(value = "id") String id, @RequestParam(value = "pw") String pw,
-			@RequestParam(value = "name") String name, @RequestParam(value = "gender") String gender) {
-		System.out.println("UserController.join2");
-
-		userService.exeJoin2(id, pw, name, gender);
-
-		// 성공하면 리스트로 리다이렉트
-		return "redirect:/user/joinok";
 	}
 
 	/******************************************************************************************************
@@ -116,64 +106,46 @@ public class UserController {
 
 	// 수정폼
 	@RequestMapping(value = "/modifyform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modifyForm() {
+	public String modifyForm(HttpSession session, Model model) {
 
 		System.out.println("UserController.modifyform");
+		
+		UserVo loginUserInfo = (UserVo) session.getAttribute("authUser");
+		int userNo = loginUserInfo.getNo();
+		
+		// mfVo -->modifyform
+				UserVo mfVo = userService.exeMform(userNo);
+
+				model.addAttribute("userVo", mfVo);
+
+				System.out.println(mfVo);
+
 
 		return "/user/modifyForm";
 	}
 
 	// 회원정보수정
 	@RequestMapping(value = "/modify", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modify(@ModelAttribute UserVo userVo) {
+	public String modify(@RequestParam(value = "pw") String pw, @RequestParam(value = "name") String name,
+			@RequestParam(value = "gender") String gender, HttpSession session) {
 
 		System.out.println("UserController.modify()");
 
-		userService.exeModify(userVo);
-
-		// 성공하면 메인으로 리다이렉트
-		return "redirect:/main";
-	}
-
-	// 수정폼2
-	@RequestMapping(value = "/modifyform2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modifyForm2(HttpSession session, Model model) {
-
-		System.out.println("UserController.modifyform2");
-
-		UserVo loginUserInfo = (UserVo) session.getAttribute("authUser");
-		int userNo = loginUserInfo.getNo();
-
-		// mfVo -->modifyform
-		UserVo mfVo = userService.exeMform(userNo);
-
-		model.addAttribute("userVo", mfVo);
-
-		System.out.println(mfVo);
-
-		return "/user/modifyForm";
-	}
-
-	// 회원정보수정2
-	@RequestMapping(value = "/modify2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String modify2(@RequestParam(value = "pw") String pw, @RequestParam(value = "name") String name,
-			@RequestParam(value = "gender") String gender, HttpSession session) {
-
-		System.out.println("UserController.modify");
-
 		// moVo -->modify
-		UserVo moVo = (UserVo) session.getAttribute("authUser");
-		int num = moVo.getNo();
+				UserVo moVo = (UserVo) session.getAttribute("authUser");
+				int num = moVo.getNo();
 
-		UserVo userVo = new UserVo(num, pw, name, gender);
+				UserVo userVo = new UserVo(num, pw, name, gender);
 
-		System.out.println(userVo);
+				System.out.println(userVo);
 
-		userService.exeModify(userVo);
+				userService.exeModify(userVo);
+;
 
 		// 성공하면 메인으로 리다이렉트
 		return "redirect:/main";
 	}
+
 
 	/**************************************************************************************************
 	 * 수정 delete

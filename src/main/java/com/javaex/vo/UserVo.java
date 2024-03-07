@@ -2,12 +2,14 @@ package com.javaex.vo;
 
 public class UserVo {
 
+	//필드 
 	private int no;
 	private String id;
 	private String pw;
 	private String name;
 	private String gender;
 	
+	//생성자 
 	public UserVo() {
 		super();
 	}

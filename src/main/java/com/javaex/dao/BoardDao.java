@@ -78,7 +78,7 @@ public class BoardDao {
 	public int boardDelete(int bno) {
 
 		int count = sqlSession.delete("board.boardDelete", bno);
-		// System.out.println(count);
+		
 
 		return count;
 	}

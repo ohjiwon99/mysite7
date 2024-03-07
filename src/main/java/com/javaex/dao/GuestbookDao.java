@@ -15,7 +15,9 @@ public class GuestbookDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 전체가져오기
+	/*************************
+	 * 전체가져오기 List
+	 **************************/
 	public List<GuestbookVo> guestbookSelect() {
 		System.out.println("GuestbookDao.guestbookSelect()");
 
@@ -40,13 +42,13 @@ public class GuestbookDao {
 		System.out.println("GuestbookDao.guestbookSelectOne()");
 
 		Map<String, Object> pMap = sqlSession.selectOne("guestbook.selectOne2", no);
-		// System.out.println(pMap);
-		// System.out.println(pMap.get("name"));
-
+		
 		return pMap;
 	}
 
-	// 수정
+	/*************************
+	 * 수정 
+	 **************************/
 	public int guestbookModify(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookDao.guestbookModify()");
 
@@ -56,7 +58,9 @@ public class GuestbookDao {
 
 	}
 
-	// 삭제
+	/*************************
+	 * 삭제 Delete
+	 **************************/
 	public int guestbookDelete(Map<String, String> gMap) {
 
 		int count = sqlSession.delete("guestbook.guestbookDelete", gMap);
@@ -65,7 +69,9 @@ public class GuestbookDao {
 		return count;
 	}
 
-	// 게스트북등록
+	/*************************
+	 * 등록 Insert
+	 **************************/
 	public int guestbookInsert(GuestbookVo guestbookVo) {
 
 		int count = sqlSession.insert("guestbook.guestbookInsert", guestbookVo);
