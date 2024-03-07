@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<!-- 쿼리문 작성 -->
+
+	<!-- personVo 매핑 -->
+	<!-- <resultMap id="resultMapPersonVo" type="PersonVo"> <result column="person_id" property="personId"></result> <result column="name" property="name"></result> 
+		<result column="hp" property="hp"></result> <result column="company" property="company"></result> </resultMap> -->
+
+	
+	
+	<!-- 로그인관련 -->
+	<!-- 로그인 -->
+	<select id="selectByIdPw" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			select no, name
+			from users
+			where id = #{ id }
+			and password = #{ pw }
+		]]>
+	</select>
+
+
+
+	<!-- 회원가입관련 -->
+	<!-- 추가 insert -->
+	<insert id="userInsert" parameterType="UserVo">
+		<![CDATA[
+			insert into users
+			value (null, #{ id }, #{ pw }, #{ name }, #{ gender })
+		]]>
+	</insert>
+
+	<!-- 추가2 map insert2 -->
+	<insert id="userInsert2" parameterType="map">
+		<![CDATA[
+			insert into users
+			value (null, #{ id }, #{ pw }, #{ name }, #{ gender })
+		]]>
+	</insert>
+
+
+
+
+
+	<!-- 회원수정관련 -->
+	<!-- 회원정보 수정폼 -->
+	<select id="selectOne" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			select id,
+				   password as pw,
+				   name,
+				   gender
+			from users
+			where no = #{no}
+		]]>
+	</select>
+
+	<!-- 수정 update -->
+	<update id="userUpdate" parameterType="UserVo">
+		<![CDATA[
+			update users
+			set password = #{ pw },
+				name = #{ name },
+			    gender = #{ gender }
+			where no = #{ no }
+		]]>
+	</update>
+
+
+
+
+
+	<!-- 회원삭제관련 -->
+	<!-- 삭제 delete -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from users where id = #{ id }
+		]]>
+	</delete>
+
+
+
+</mapper>
